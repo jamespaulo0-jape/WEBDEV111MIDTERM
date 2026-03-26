@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FixIT System</title>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Segoe UI; }
+
+body {
+    background: linear-gradient(135deg,#0f172a,#020617);
+    color:white;
+}
+
+/* NAV */
+nav {
+    display:flex;
+    justify-content:space-between;
+    padding:20px 40px;
+    background:#020617;
+}
+nav h1 { color:#38bdf8; }
+nav button {
+    background:#38bdf8;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* SECTIONS */
+.section { display:none; padding:40px; min-height:100vh; }
+.active { display:block; }
+
+/* HOME */
+.home { text-align:center; margin-top:100px; }
+.home h2 { font-size:3rem; }
+.home p { opacity:.7; margin-top:10px; }
+
+/* LOGIN */
+.login-box {
+    max-width:400px;
+    margin:auto;
+    background:#020617;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 0 20px rgba(0,255,255,.2);
+}
+.terminal {
+    background:black;
+    padding:15px;
+    color:#00ff9c;
+    font-family:monospace;
+    margin-bottom:15px;
+}
+.cursor {
+    display:inline-block;
+    width:10px;
+    background:#00ff9c;
+    animation:blink 1s infinite;
+}
+@keyframes blink { 50% { opacity:0; } }
+
+input, textarea {
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    background:#020617;
+    border:1px solid #38bdf8;
+    color:white;
+    border-radius:6px;
+}
+
+button.primary {
+    width:100%;
+    padding:12px;
+    background:#38bdf8;
+    border:none;
+    color:black;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* DASHBOARD */
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+.card {
+    background:#020617;
+    padding:20px;
+    border-radius:12px;
+    border:1px solid #1e293b;
+    transition:.3s;
+}
+.card:hover {
+    transform:translateY(-5px);
+    border-color:#38bdf8;
+}
+.card h3 { color:#38bdf8; }
+
+.logout { background:crimson; margin-top:20px; }
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h1>FixIT Desk</h1>
+    <button onclick="show('login')">Login</button>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="section active home">
+    <h2>FixIT Support System</h2>
+    <p>Tickets, Support, History, Progress — all in one place</p>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="section">
+    <div class="login-box">
+        <div class="terminal">
+            > Initializing FixIT...<br>
+            > Enter credentials<span class="cursor"></span>
+        </div>
+
+        <input id="user" placeholder="Username">
+        <input id="pass" type="password" placeholder="Password">
+        <button class="primary" onclick="login()">Login</button>
+        <p id="err" style="color:red;"></p>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="section">
+
+    <h2>Dashboard</h2>
+
+    <!-- FEATURES -->
+    <div class="grid">
+        <div class="card"><h3>FixIt Desk</h3><p>Resolve issues quickly</p></div>
+        <div class="card"><h3>IT Support</h3><p>Live assistance</p></div>
+        <div class="card"><h3>Tickets</h3><p>Create & track issues</p></div>
+        <div class="card"><h3>Progress</h3><p>Monitor workflow</p></div>
+        <div class="card"><h3>History</h3><p>View past activity</p></div>
+    </div>
+
+    <!-- CREATE TICKET -->
+    <h3 style="margin-top:30px;">Create Ticket</h3>
+    <input id="title" placeholder="Title">
+    <textarea id="desc" placeholder="Description"></textarea>
+    <button class="primary" onclick="addTicket()">Submit Ticket</button>
+
+    <!-- TICKETS -->
+    <h3>All Tickets</h3>
+    <div id="tickets"></div>
+
+    <button class="primary logout" onclick="logout()">Logout</button>
+</div>
+
+<script>
+// PAGE SWITCH
+function show(id){
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+// LOGIN (local fake auth)
+function login(){
+    if(user.value==="admin" && pass.value==="1234"){
+        show("dashboard");
+        loadTickets();
+    } else {
+        err.innerText="Wrong credentials";
+    }
+}
+
+// LOGOUT
+function logout(){
+    show("home");
+}
+
+// ADD TICKET (localStorage)
+function addTicket(){
+    let t = {title:title.value, desc:desc.value};
+
+    let data = JSON.parse(localStorage.getItem("tickets") || "[]");
+    data.push(t);
+    localStorage.setItem("tickets", JSON.stringify(data));
+
+    loadTickets();
+}
+
+// LOAD TICKETS
+function loadTickets(){
+    let data = JSON.parse(localStorage.getItem("tickets") || "[]");
+    tickets.innerHTML="";
+
+    data.forEach(t=>{
+        tickets.innerHTML += `
+            <div class="card">
+                <h3>${t.title}</h3>
+                <p>${t.desc}</p>
+            </div>
+        `;
+    });
+}
+</script>
+
+</body>
+</html>
