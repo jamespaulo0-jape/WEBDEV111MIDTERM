@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Velvet Crust</title>
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: linear-gradient(135deg, #fbc2eb, #fcd5ce);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+nav a {
+  margin: 0 8px;
+  padding: 8px 15px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 20px;
+  text-decoration: none;
+  color: #ff4f7b;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background: white;
+  transform: scale(1.05);
+}
+
+.container { display: none; padding: 20px; }
+.active { display: block; }
+
+.carousel {
+  max-width: 520px;
+  height: 280px;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+.slides img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.card {
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(12px);
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+
+.card img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+button {
+  background: rgba(255,255,255,0.7);
+  color: #ff4f7b;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: white;
+  transform: scale(1.05);
+}
+
+input {
+  margin-top: 5px;
+  width: 60px;
+  text-align: center;
+}
+
+.login-box {
+  max-width: 320px;
+  margin: auto;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+ul li {
+  background: rgba(255,255,255,0.4);
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h2>🍰 Velvet Crust</h2>
+  <nav>
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('shop')">Shop</a>
+    <a onclick="showPage('cart')">Cart</a>
+    <a onclick="showPage('login')">Login</a>
+  </nav>
+</header>
+
+<div class="container active" id="home">
+  <div class="carousel">
+    <div class="slides" id="slides">
+      <img src="cake1.jpg">
+      <img src="cake4.jpg">
+      <img src="cake3.jpg">
+    </div>
+  </div>
+</div>
+
+<div class="container" id="shop">
+  <h2 style="text-align:center">✨ Trending Cakes</h2>
+  <div class="products">
+
+    <div class="card">
+      <img src="cake1.jpg">
+      <h4>Strawberry</h4>
+      <p>$10</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Strawberry',10,'q1')">Add</button>
+    </div>
+
+    <div class="card">
+      <img src="cake2.jpg">
+      <h4>Red Velvet</h4>
+      <p>$12</p>
+      <input type="number" value="1" id="q2">
+      <button onclick="addToCart('Red Velvet',12,'q2')">Add</button>
+    </div>
+
+    <div class="card">
+      <img src="cake3.jpg">
+      <h4>Choco Vanilla</h4>
+      <p>$11</p>
+      <input type="number" value="1" id="q3">
+      <button onclick="addToCart('Choco Vanilla',11,'q3')">Add</button>
+    </div>
+	<div class="card">
+      <img src="cake4.jpg">
+      <h4>Vanilla</h4>
+      <p>$10</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Vanilla',10,'q1')">Add</button>
+    </div>
+	
+    <div class="card">
+      <img src="cake5.jpg">
+      <h4>Chocolate</h4>
+      <p>$10</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Chocolate',10,'q1')">Add</button>
+    </div>
+	
+	<div class="card">
+      <img src="cake6.jpg">
+      <h4>Mint Oreo</h4>
+      <p>$15</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Mint Oreo',10,'q1')">Add</button>
+    </div>
+	
+	<div class="card">
+      <img src="cake7.jpg">
+      <h4>Fluppy Lemon</h4>
+      <p>$11</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Fluppy Lemon',10,'q1')">Add</button>
+    </div>
+	
+	<div class="card">
+      <img src="cake8.jpg">
+      <h4>Mocha</h4>
+      <p>$9</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Mocha',10,'q1')">Add</button>
+    </div>
+	
+	<div class="card">
+      <img src="cake9.jpg">
+      <h4>Caramell Apple</h4>
+      <p>$9</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Caramell Apple',10,'q1')">Add</button>
+    </div>
+	
+	<div class="card">
+      <img src="cake10.jpg">
+      <h4>Cookie Butter</h4>
+      <p>$11</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Cookie Butter',10,'q1')">Add</button>
+    </div>
+	
+	<div class="card">
+      <img src="cake11.jpg">
+      <h4>Strawberry Lemon</h4>
+      <p>$13</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Strawberry Lemon',10,'q1')">Add</button>
+    </div>
+	
+	<div class="card">
+      <img src="cake12.jpg">
+      <h4>Chocolate Peanut>
+      <p>$15</p>
+      <input type="number" value="1" id="q1">
+      <button onclick="addToCart('Chocolate Peanut',10,'q1')">Add</button>
+    </div>
+
+  </div>
+
+  </div>
+</div>
+
+<div class="container" id="cart">
+  <h2>🛒 Your Cart</h2>
+  <ul id="cartList"></ul>
+</div>
+
+<div class="container" id="login">
+  <div class="login-box">
+    <h2>Login</h2>
+    <input type="text" placeholder="Username"><br><br>
+    <input type="password" placeholder="Password"><br><br>
+    <button onclick="alert('Logged in!')">Login</button>
+  </div>
+</div>
+
+<script>
+let cart = [];
+
+function showPage(id){
+  document.querySelectorAll('.container').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function addToCart(name,price,qid){
+  let qty = parseInt(document.getElementById(qid).value);
+  if(qty <= 0) return alert("Invalid quantity");
+
+  cart.push({name,price,qty});
+  displayCart();
+  showPage('cart');
+}
+
+function displayCart(){
+  let list = document.getElementById('cartList');
+  list.innerHTML='';
+  let total = 0;
+
+  cart.forEach((item,i)=>{
+    let subtotal = item.price * item.qty;
+    total += subtotal;
+
+    let li=document.createElement('li');
+    li.innerHTML=`${item.name} x ${item.qty} - $${subtotal} <button onclick="removeItem(${i})">❌</button>`;
+    list.appendChild(li);
+  });
+
+  let totalLi = document.createElement('li');
+  totalLi.innerHTML = `<strong>Total: $${total}</strong>`;
+  list.appendChild(totalLi);
+}
+
+function removeItem(i){ cart.splice(i,1); displayCart(); }
+
+let index=0;
+const slides=document.getElementById('slides');
+const totalSlides = slides.children.length;
+
+setInterval(()=>{
+  index=(index+1)%totalSlides;
+  slides.style.transform=`translateX(-${index*100}%)`;
+},3000);
+</script>
+
+</body>
+</html>
