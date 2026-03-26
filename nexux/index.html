@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Event</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #00e6ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      height: 80vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 30px;
+      background: #00e6ff;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .section {
+      padding: 50px;
+      text-align: center;
+    }
+
+    .card {
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      margin: 10px;
+      border-radius: 15px;
+      width: 250px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.5);
+    }
+
+    /* Login Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1e1e1e;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>NEXUS EVENT</h2>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+    <a href="#" onclick="openLogin()">Login</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Welcome to Nexus Event</h1>
+  <p>The future of immersive experiences</p>
+  <button class="btn" onclick="openLogin()">Join Now</button>
+</section>
+
+<section class="section" id="events">
+  <h2>Upcoming Events</h2>
+  <div class="card">Mr.and Ms. CCS</div>
+  <div class="card">CCS Sport Fest</div>
+  <div class="card">Gaming Universe</div>
+</section>
+
+<section class="section" id="contact">
+  <h2>Contact Us</h2>
+  <p>Email: info@nexusevent.com</p>
+</section>
+
+<footer>
+  <p>© 2026 Nexus Event</p>
+</footer>
+
+<!-- Login Modal -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <h3>Login</h3>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button class="btn" onclick="login()">Login</button>
+  </div>
+</div>
+
+<script>
+  function openLogin() {
+    document.getElementById('loginModal').style.display = 'flex';
+  }
+
+  function login() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+
+    if(user === "admin" && pass === "1234") {
+      alert("Login successful! Welcome " + user);
+      document.getElementById('loginModal').style.display = 'none';
+    } else {
+      alert("Invalid credentials");
+    }
+  }
+
+  window.onclick = function(e) {
+    const modal = document.getElementById('loginModal');
+    if (e.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>
