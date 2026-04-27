@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h2>Login / Sign Up</h2>
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+
+<script>
+function login(){
+let u=user.value;
+let p=pass.value;
+
+if(u=="superadmin" && p=="123"){
+location="superadmin.html";
+}else if(u=="admin" && p=="123"){
+location="admin.html";
+}else{
+location="user.html";
+}
+}
+</script>
+</body>
+</html>

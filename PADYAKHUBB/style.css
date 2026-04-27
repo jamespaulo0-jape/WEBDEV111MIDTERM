@@ -1,0 +1,82 @@
+body{
+font-weight:bold;
+color:#00c6ff;
+}
+
+.menu a{
+margin:0 10px;
+text-decoration:none;
+color:#00c6ff;
+font-weight:bold;
+}
+
+.menu a:hover{
+color:white;
+}
+
+.hero{
+padding:60px 20px;
+}
+
+.hero h1{
+font-size:40px;
+}
+
+.login-box{
+background:white;
+color:black;
+padding:20px;
+border-radius:10px;
+width:250px;
+margin:20px auto;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+input{
+width:90%;
+padding:10px;
+margin:5px;
+border-radius:5px;
+border:none;
+}
+
+button{
+padding:10px;
+width:100%;
+background:#0072ff;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#00c6ff;
+}
+
+.title{
+margin-top:30px;
+}
+
+.grid{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.card{
+background:white;
+color:black;
+padding:20px;
+margin:10px;
+border-radius:10px;
+width:150px;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.1);
+background:#00c6ff;
+color:white;
+}

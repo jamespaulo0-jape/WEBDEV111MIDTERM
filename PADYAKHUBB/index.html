@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PadyakHub</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+<div class="logo">🚴 PadyakHub</div>
+<div class="menu">
+<a href="index.html">Home</a>
+<a href="parts.html">Parts & Services</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</div>
+</nav>
+
+<section class="hero">
+<h1>Ride Better with PadyakHub</h1>
+<p>Your trusted bike shop for parts & services</p>
+</section>
+
+<section class="login-box">
+<h3>Login / Sign Up</h3>
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Enter</button>
+</section>
+
+<script>
+function login(){
+let u=user.value;
+let p=pass.value;
+
+if(u=="superadmin" && p=="123"){
+location="superadmin.html";
+}else if(u=="admin" && p=="123"){
+location="admin.html";
+}else{
+location="user.html";
+}
+}
+</script>
+
+</body>
+</html>
+
