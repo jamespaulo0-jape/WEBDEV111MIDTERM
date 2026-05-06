@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PadyakHub - Management System</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #2b58f8 0%, #00a86b 100%);
+            --bg-light: #f4f7f6;
+            --text-dark: #333;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            height: 100%;
+        }
+
+       
+        #login-page {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-gradient);
+        }
+
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            width: 380px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .login-card h1 { margin: 0; color: #222; }
+        .login-card p { color: #666; margin-bottom: 30px; }
+
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 14px; margin-bottom: 5px; color: #555; }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        
+        #dashboard-page { display: none; flex-direction: column; height: 100vh; }
+
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+
+      
+        aside {
+            width: 260px;
+            background: white;
+            border-right: 1px solid #eee;
+            padding: 20px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            color: #555;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-item:hover { background: #f0f4ff; color: #2b58f8; }
+        .nav-item.active { background: #e8f0fe; color: #2b58f8; font-weight: 600; }
+
+        
+        main { flex: 1; padding: 30px; overflow-y: auto; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            padding: 25px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: var(--card-shadow);
+        }
+
+        
+        .bg-blue { background: #2b58f8; }
+        .bg-green { background: #00c853; }
+        .bg-teal { background: #009688; }
+        .bg-dark { background: #1a237e; }
+
+        .stat-card h2 { margin: 0; font-size: 32px; }
+        .stat-card p { margin: 5px 0 0; opacity: 0.9; }
+
+        .white-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            background: #e1f5fe;
+            color: #0288d1;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-page">
+        <div class="login-card">
+            <h1>PadyakHub</h1>
+            <p>Welcome back!</p>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="user@padyakhub.com">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" value="password123">
+            </div>
+            <button class="login-btn" onclick="attemptLogin()">Login</button>
+            <p style="font-size: 12px; margin-top: 20px;">
+                Demo Accounts:<br>
+                user@padyakhub.com | admin@padyakhub.com | superadmin@padyakhub.com
+            </p>
+        </div>
+    </div>
+
+    <div id="dashboard-page">
+        <header>
+            <h2 id="display-role-title">Dashboard</h2>
+            <div>
+                <button onclick="logout()" style="background:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Logout</button>
+            </div>
+        </header>
+
+        <div class="main-container">
+            <aside id="sidebar">
+                </aside>
+
+            <main>
+                <h3 id="welcome-text">Overview</h3>
+                <div class="stats-grid" id="stats-container">
+                    </div>
+
+                <div class="white-panel">
+                    <h4 id="activity-title">Recent Activity</h4>
+                    <div id="activity-list">
+                        </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        
+        const roles = {
+            'user@padyakhub.com': {
+                name: 'User Dashboard',
+                welcome: 'Welcome back!',
+                menu: ['Dashboard', 'My Orders', 'Profile Management', 'Browse Parts', 'Contact'],
+                stats: [
+                    { label: 'Total Orders', val: '5', color: 'bg-blue' },
+                    { label: 'Active Services', val: '2', color: 'bg-green' },
+                    { label: 'Total Spent', val: '$847', color: 'bg-teal' }
+                ],
+                activity: ['Order #1234 shipped - 2 days ago', 'Service appointment confirmed - 3 days ago']
+            },
+            'admin@padyakhub.com': {
+                name: 'Admin Dashboard',
+                welcome: 'Admin Overview',
+                menu: ['Dashboard', 'User Management', 'Product Management', 'Profile Management', 'Transactions'],
+                stats: [
+                    { label: 'Total Users', val: '156', color: 'bg-blue' },
+                    { label: 'Products', val: '89', color: 'bg-green' },
+                    { label: 'Orders', val: '342', color: 'bg-teal' },
+                    { label: 'Revenue', val: '$45.2K', color: 'bg-dark' }
+                ],
+                activity: ['New user registered - 1 hour ago', 'Product inventory updated - 3 hours ago', 'New order placed - 5 hours ago']
+            },
+            'superadmin@padyakhub.com': {
+                name: 'Super Admin Dashboard',
+                welcome: 'Super Admin Overview',
+                menu: ['Dashboard', 'Reports', 'Admin Management', 'User Management', 'System Settings'],
+                stats: [
+                    { label: 'Total Users', val: '1,234', color: 'bg-blue' },
+                    { label: 'Admins', val: '15', color: 'bg-green' },
+                    { label: 'Total Revenue', val: '$125K', color: 'bg-teal' },
+                    { label: 'System Health', val: '98%', color: 'bg-dark' }
+                ],
+                activity: ['Database Status: Online', 'API Server: Online', 'Payment Gateway: Online']
+            }
+        };
+
+        function attemptLogin() {
+            const email = document.getElementById('email').value.toLowerCase();
+            if (roles[email]) {
+                loadDashboard(email);
+            } else {
+                alert("Invalid demo email. Please use one of the three listed.");
+            }
+        }
+
+        function loadDashboard(email) {
+            const data = roles[email];
+            
+            
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'flex';
+
+            
+            document.getElementById('display-role-title').innerText = data.name;
+            document.getElementById('welcome-text').innerText = data.welcome;
+
+            
+            const sidebar = document.getElementById('sidebar');
+            sidebar.innerHTML = data.menu.map((item, index) => 
+                `<a class="nav-item ${index === 0 ? 'active' : ''}" onclick="selectTab(this)">${item}</a>`
+            ).join('');
+
+            
+            const statsCont = document.getElementById('stats-container');
+            statsCont.innerHTML = data.stats.map(s => `
+                <div class="stat-card ${s.color}">
+                    <h2>${s.val}</h2>
+                    <p>${s.label}</p>
+                </div>
+            `).join('');
+
+            
+            const activityCont = document.getElementById('activity-list');
+            activityCont.innerHTML = data.activity.map(a => `
+                <div style="padding: 12px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                    <span>${a}</span>
+                    <span class="status-badge">Done</span>
+                </div>
+            `).join('');
+        }
+
+        function selectTab(el) {
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function logout() {
+            location.reload(); 
+            location.reload(); 
+        }
+    </script>
+</body>
+</html>
